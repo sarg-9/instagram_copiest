@@ -1,0 +1,38 @@
+<h1>All Users</h1>
+<div class="posts">
+  <% @users.each do |user| %>
+    <% if user_signed_in? %>
+      <% if user.id == current_user.id %>
+        <%next%>
+      <%else%>
+        <section class="post">
+          <div class="user">
+            <div class="avatar">
+              <% if user.avatar.attached? %>
+                <%= link_to user_path(user.id) do %>
+                  <%= image_tag user.avatar %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="description">
+              <%= user.name %>
+              <% if home_following(user.id)%>
+                <% if home_follow(user.id)%>
+                  <%= link_to 'Unfollow', user_follower_path(user.id,home_follower(user.id)), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                <%else%>
+                  <a href="<%= new_user_follower_path(user.id)%>">
+                    <i class="fa fa-user-plus fa-2x float-right m-4"></i>
+                  </a>
+                <%end%>
+              <%else%>
+                <a href="<%= new_user_follower_path(user.id)%>">
+                  <i class="fa fa-user-plus fa-2x float-right m-4"></i>
+                </a>
+              <%end%>
+            </div>
+          </div>
+        </section>
+      <%end%>
+    <%end%>
+  <%end%>
+</div>

@@ -1,0 +1,23 @@
+<%= form_with(url: "/users/#{params[:user_id]}/stories", local: true) do |form| %>
+  <% if @story.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@story.errors.count, "error") %> prohibited this @story from being saved:</h2>
+      <ul>
+        <% @story.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :caption %>
+    <%= form.text_area :caption %>
+  </div>
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.file_field :image, direct_upload: true%>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
